@@ -1,8 +1,11 @@
-# Use the official n8n image as a base
+# Start from the official n8n image
 FROM docker.n8n.io/n8nio/n8n
 
-# Install FFmpeg
-RUN apt-get update && \
-    apt-get install -y ffmpeg && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install ffmpeg using Alpine package manager (apk)
+USER root
+
+RUN apk update && \
+    apk add --no-cache ffmpeg
+
+# Return to default user
+USER node
